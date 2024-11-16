@@ -1,5 +1,4 @@
 Manifest-Version: 0.0.1
-Project-Name: my-project-name
+Project-Name: software-evolution
 Source: src/main/rascal
 Require-Libraries: 
-    
