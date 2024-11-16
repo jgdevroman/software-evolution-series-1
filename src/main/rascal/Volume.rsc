@@ -10,10 +10,12 @@ import String;
 import Map;
 import Node;
 
+import Utility;
 
-int getVolume(list[Declaration] asts) {
+
+int getVolume(loc projectPath) {
+    list[Declaration] asts = getASTs(projectPath);
     totalCount = 0;
-
     for (decl <- asts){
         totalCount += getLineCount(decl.src.top);
     }

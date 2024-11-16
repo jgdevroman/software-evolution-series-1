@@ -12,13 +12,6 @@ import Node;
 
 import Volume;
 
-list[Declaration] getASTs(loc projectLocation) {
-    M3 model = createM3FromMavenProject(projectLocation);
-    list[Declaration] asts = [createAstFromFile(f, true)
-        | f <- files(model.containment), isCompilationUnit(f)];
-    return asts;
-}
-
 void printAllSourceLocations(list[Declaration] asts) {
     for (decl <- asts) {
         println("Source location for declaration:");
@@ -32,9 +25,12 @@ void printAllSourceLocations(list[Declaration] asts) {
 
 void main() {
     loc projectPathSmallSql = |cwd:///smallsql0.21_src|;
-    list[Declaration] astsSmallSql = getASTs(projectPathSmallSql);
+    loc projectPathHsql = |cwd:///hsqldb-2.3.1|;
     
-    smallSqlVolume = getVolume(astsSmallSql);
+    smallSqlVolume = getVolume(projectPathSmallSql);
+    // Getting errors. Need to fix 
+    // hsqlVolume = getVolume(projectPathHsql);
 
-    println("Volume: <smallSqlVolume>");
+    println("Volume smallSql: <smallSqlVolume>");
+    // println("Volume hsql: <hsqlVolume>");
 }
