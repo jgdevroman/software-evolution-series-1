@@ -153,7 +153,7 @@ Overall Maintainability: <sourceCodeScores[3]>
 void printMetricsReport(int volume, tuple[real,int] duplication, tuple[real, real, real, real] complexity, tuple[real, real, real, real] unitSize, str name) {
     header = 
         "----------------------------------------------------------------\n" +
-        "  <name> Maintainability Score Report \n" + 
+        "  <name> Maintainability Metrics Report \n" + 
         "----------------------------------------------------------------\n";
 
     duplicationScore = calcDuplicationMetric(duplication[0]);
@@ -162,5 +162,7 @@ void printMetricsReport(int volume, tuple[real,int] duplication, tuple[real, rea
     unitSizeScore = calcComplexityScore(complexity[1], complexity[2], complexity[3]);
     sourceCodeScores = calcSourceCodeRatings(volumeScore[0], duplicationScore, complexityScore, unitSizeScore);
 
-    println(header + volumeReport(volume, volumeScore) + duplicationReport(duplication, duplicationScore) + complexityReport(complexity, complexityScore) + unitSizeReport(unitSize, unitSizeScore) + sourceCodeReport(sourceCodeScores));
+    result = header + volumeReport(volume, volumeScore) + duplicationReport(duplication, duplicationScore) + complexityReport(complexity, complexityScore) + unitSizeReport(unitSize, unitSizeScore) + sourceCodeReport(sourceCodeScores);
+    writeFile(|cwd:///analysis_result| + "result_<name>.txt", result);
+    println(result);
 }

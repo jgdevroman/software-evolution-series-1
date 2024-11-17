@@ -1,0 +1,43 @@
+----------------------------------------------------------------
+  smallsql0.21_src Maintainability Metrics Report 
+----------------------------------------------------------------
+==========  Volume ========== 
+
+Volume: 24016 
+Volume Man Years: 0 - 8
+    
+Volume Score: ++
+
+========== Duplication ==========
+
+Duplicatied Lines: 1227
+Duplication percentage: 0.05066061107 
+
+Duplication Score: o
+
+========== Unit Complexity ========== 
+
+Low Risk (simple): 76.1430575000 
+Moderate Risk (more complex): 6.95184665700 
+High Risk (complex): 11.0378681600 
+Very High Risk (untestable): 5.86722767600 
+    
+Complexity Score: --
+
+==========  Unit Size ========== 
+
+Low Risk (simple): 45.6568489900 
+Moderate Risk (more complex): 22.1972884500 
+High Risk (complex): 16.3674614300 
+Very High Risk (untestable): 15.7784011200 
+    
+Unit Size Score: --
+
+==========  Source Code Maintainability ========== 
+
+Analysability: -
+Changeability: o
+Testabillity: +
+
+Overall Maintainability: o
+

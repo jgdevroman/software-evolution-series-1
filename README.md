@@ -12,6 +12,7 @@ This program will calculate the SIG maintainability scores [1] of a Java project
 2. Make sure that the Java project has a `pom.xml` file in its root
 3. Start a rascal terminal at the root and import `Main`
 4. Run `main()` to run the analysis
+5. The test results will be written into text files in `analysis_result`
 
 ## Tests
 
