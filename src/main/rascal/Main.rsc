@@ -27,6 +27,9 @@ void main() {
     println("Start analyzing following projects: <entries>. Can take a few minutes..");
     
     for(entry <- entries) {
+        if(entry == ".gitkeep") {
+            continue;
+        }
         projectLocation = |cwd:///resources/| + entry;
         set[loc] fileLocations = find(projectLocation, "java");
         smallSqlVolume = getVolume(fileLocations);
