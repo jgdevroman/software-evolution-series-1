@@ -1,0 +1,43 @@
+----------------------------------------------------------------
+  hsqldb-2.3.1 Maintainability Metrics Report 
+----------------------------------------------------------------
+==========  Volume ========== 
+
+Volume: 172150 
+Volume Man Years: 8 - 30
+    
+Volume Score: +
+
+========== Duplication ==========
+
+Duplicatied Lines: 12454
+Duplication percentage: 0.07327175384 
+
+Duplication Score: o
+
+========== Unit Complexity ========== 
+
+Low Risk (simple): 67.1657850500 
+Moderate Risk (more complex): 13.5709085300 
+High Risk (complex): 10.6283866100 
+Very High Risk (untestable): 8.63491981700 
+    
+Complexity Score: --
+
+==========  Unit Size ========== 
+
+Low Risk (simple): 29.8579121500 
+Moderate Risk (more complex): 19.0092778800 
+High Risk (complex): 18.4662298100 
+Very High Risk (untestable): 32.6665801600 
+    
+Unit Size Score: --
+
+==========  Source Code Maintainability ========== 
+
+Analysability: o
+Changeability: o
+Testabillity: +
+
+Overall Maintainability: +
+
