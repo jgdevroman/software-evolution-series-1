@@ -9,33 +9,36 @@ import Set;
 import String;
 import Map;
 import Node;
+import util::FileSystem;
 
 import Volume;
+import Utility;
+import UnitSize;
+import UnitComplexity;
+import Test;
 import Duplication;
 import Metrics;
 
-void printAllSourceLocations(list[Declaration] asts) {
-    for (decl <- asts) {
-        println("Source location for declaration:");
-        println("File: <decl.src.top>");
-        str file = readFile(decl.src.top);
-        println(file);
-
-        break;
-    }
-}
 
 void main() {
     loc projectPathSmallSql = |cwd:///smallsql0.21_src|;
     loc projectPathHsql = |cwd:///hsqldb-2.3.1|;
-    
+    loc testLocation = |cwd:///Tests///Complexity|;
 
-    smallSqlVolume = getVolume(projectPathSmallSql);
+    set[loc] smallsqlAST = find(projectPathSmallSql, "java");
+    set[loc] hsqldbAST = find(projectPathHsql, "java");
+    set[loc] testloc = find(testLocation, "java");
+    
+    int smallSqlVolume = getVolume(smallsqlAST);
+    println("Volume smallSql: <smallSqlVolume>");
+
     smallSqlDuplication = getDuplication(projectPathSmallSql);
-    printMetricsReport(smallSqlVolume, smallSqlDuplication, "smallsql0.21");
 
     // println("Volume hsql: <hsqlVolume>");
-    hsqlDuplication = getDuplication(projectPathHsql);
-    println("Duplication hsql: <hsqlDuplication>");
+    // hsqlDuplication = getDuplication(projectPathHsql);
+    // println("Duplication hsql: <hsqlDuplication>");
 
+    getUnitSize(projectPathSmallSql);
+    calculateComplexity(smallsqlAST);
+    printMetricsReport(smallSqlVolume, smallSqlDuplication, "smallsql0.21");
 }

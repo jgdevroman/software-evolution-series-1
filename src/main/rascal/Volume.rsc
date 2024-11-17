@@ -13,20 +13,18 @@ import Node;
 import Utility;
 
 
-int getVolume(loc projectPath) {
-    list[Declaration] asts = getASTs(projectPath);
+int getVolume(set[loc] locations) {
     totalCount = 0;
-    for (decl <- asts){
-        totalCount += getLineCount(decl.src.top);
+    for (l <- locations){
+        code = readFile(l);
+        totalCount += getLineCount(code);
     }
 
     return totalCount;
 }
 
-int getLineCount(loc file) {
-    code = readFile(file);
-
-    for (/<comment:\/\*(?:.|\n)*?\*\/>/ := code) { 
+int getLineCount(str code) {
+    for (/<comment:\/\*[\s\S]*?\*\/>/ := code) { 
         code = replaceAll(code, comment, "");
     }
     
