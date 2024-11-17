@@ -19,8 +19,31 @@ list[str] getLines(loc projectLocation) {
    list[str] lines = []; 
    M3 model = createM3FromMavenProject(projectLocation); 
    for (f <- files(model.containment), isCompilationUnit(f)) {
-        lines += readFileLines(f);
+        lines += filterRedundantLines(readFileLines(f));
    }
 
-   return mapper(lines, trim);
+   return lines;
+}
+
+bool isRedundantLine(str line) {
+  // Check if comma
+  if(endsWith(line, "*/") || startsWith(line, "/*") || startsWith(line, "*")) {
+     return true; 
+  }
+  // Check if whitespace
+  if( /^\s*$/ := line) {
+    return true;
+  }
+  return false;
+}
+
+list[str] filterRedundantLines(list[str] src) {
+    list[str] newLines = [];
+    for(line <- src) {
+        if (isRedundantLine(line)) {
+            continue;
+        }
+        newLines += trim(line);
+    }
+    return newLines;
 }

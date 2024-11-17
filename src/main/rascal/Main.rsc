@@ -28,15 +28,14 @@ void main() {
     loc projectPathSmallSql = |cwd:///smallsql0.21_src|;
     loc projectPathHsql = |cwd:///hsqldb-2.3.1|;
     
-    smallSqlVolume = getVolume(projectPathSmallSql);
-    smallSqlDuplication = getDuplication(projectPathSmallSql);
-    // Getting errors. Need to fix 
-    // hsqlVolume = getVolume(projectPathHsql);
-    hsqlDuplication = getDuplication(projectPathHsql);
 
+    smallSqlVolume = getVolume(projectPathSmallSql);
     println("Volume smallSql: <smallSqlVolume>"); 
+    smallSqlDuplication = getDuplication(projectPathSmallSql);
     println("Duplication smallSql: <smallSqlDuplication>");
+
     // println("Volume hsql: <hsqlVolume>");
+    hsqlDuplication = getDuplication(projectPathHsql);
     println("Duplication hsql: <hsqlDuplication>");
 
 }

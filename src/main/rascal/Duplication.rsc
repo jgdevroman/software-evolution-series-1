@@ -19,6 +19,7 @@ real getDuplication(loc projectPath) {
 
     list[str] lines = getLines(projectPath);
     int count = getDuplicationCount(lines);
+    println("Duplication count: <count>");
 
     return (count * 1.0) / (size(lines) * 1.0);   
 }
@@ -49,9 +50,10 @@ int getDuplicationCount(list[str] lines) {
     }
     // compute the duplicatied blocks with List.distribution
     blockDistribution = distribution(blockList);
+    duplicatedBlocks = [b | b <- blockDistribution, blockDistribution[b] > 1];
 
     // retrieve the duplicated blocks from the distribution and store the indexes of the blocks
-    for (dupBlock <- [b | b <- blockDistribution, blockDistribution[b] > 1]) {
+    for (dupBlock <- duplicatedBlocks) {
        blockIndex = blockMap[dupBlock];
        for (index <- blockIndex) {
         duplicationIndex += {index};
