@@ -32,9 +32,11 @@ void main() {
     smallSqlDuplication = getDuplication(projectPathSmallSql);
     // Getting errors. Need to fix 
     // hsqlVolume = getVolume(projectPathHsql);
+    hsqlDuplication = getDuplication(projectPathHsql);
 
-    println("Volume smallSql: <smallSqlVolume>");
+    println("Volume smallSql: <smallSqlVolume>"); 
     println("Duplication smallSql: <smallSqlDuplication>");
     // println("Volume hsql: <hsqlVolume>");
+    println("Duplication hsql: <hsqlDuplication>");
 
 }

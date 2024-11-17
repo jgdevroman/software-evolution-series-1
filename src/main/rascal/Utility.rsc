@@ -24,3 +24,33 @@ list[str] getLines(loc projectLocation) {
 
    return mapper(lines, trim);
 }
+
+// Duplication: Fix the list by trimming, removing comments and white space lines
+list[str] fixList (list [str] l){
+    list [str] newList = [];
+
+    for(s <- l) {
+        str ss = trim(s);
+
+        if(isComment(ss) || isWhitespaceLine(ss)) {
+            continue;
+        }
+        else {
+            newList += ss;
+        }
+    };
+
+    return newList;
+}
+
+
+bool isComment(str line) {
+  if(endsWith(line, "*/")) { return true; }
+  if(startsWith(line, "/*")) { return true; }
+  if(startsWith(line, "*") && !startsWith(line, "*/")) { return true; }
+  return /\/\// := line || /\/\*.*\*\// := line;
+}
+
+bool isWhitespaceLine(str line) {
+  return /^\s*$/ := line;
+}
