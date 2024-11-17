@@ -8,6 +8,7 @@ import Map;
 import Node;
 
 tuple[str VERY_GOOD, str GOOD, str SUFFICIENT, str LOW, str VERY_LOW] score = <"++", "+", "o", "-", "--">;
+map[str, int] numericScore = (score.VERY_GOOD: 5, score.GOOD: 4, score.SUFFICIENT: 3, score.LOW: 2, score.VERY_LOW: 1);
 
 tuple[str,str] calcVolumeMetric(int volume) {
     if (volume <= 66000) {
@@ -41,24 +42,40 @@ str calcDuplicationMetric(real percentage) {
     return score.VERY_LOW;
 }
 
-str calcComplexityReport(real moderateRisk, real highRisk, real veryHighRisk){
-    if (moderateRisk <= 0.25 && highRisk <= 0 && veryHighRisk <= 0) {
+str calcComplexityScore(real moderate, real high, real veryHigh) {
+    list[real] moderateThresholds = [25.0, 30.0, 40.0, 50.0];
+    list[real] highThresholds = [0.0, 5.0, 10.0, 15.0];
+    list[real] veryHighThresholds = [0.0, 0.0, 0.0, 5.0];
+
+    if (moderate <= moderateThresholds[0] && high <= highThresholds[0] && veryHigh <= veryHighThresholds[0]) {
         return score.VERY_GOOD;
-    }
-    if (moderateRisk <= 0.3 && highRisk <= 0.05 && veryHighRisk <= 0) {
+    } else if (moderate <= moderateThresholds[1] && high <= highThresholds[1] && veryHigh <= veryHighThresholds[1]) {
         return score.GOOD;
-    }
-    if (moderateRisk <= 0.4 && highRisk <= 0.1 && veryHighRisk <= 0) {
+    } else if (moderate <= moderateThresholds[2] && high <= highThresholds[2] && veryHigh <= veryHighThresholds[2]) {
         return score.SUFFICIENT;
-    }
-    if (moderateRisk <= 0.5 && highRisk <= 0.15 && veryHighRisk <= 0.05) {
+    } else if (moderate <= moderateThresholds[3] && high <= highThresholds[3] && veryHigh <= veryHighThresholds[3]) {
         return score.LOW;
+    } else {
+        return score.VERY_LOW;
     }
-    return score.VERY_LOW;
 }
 
-str duplicationReport(real duplication) {
-    duplicationScore = calcDuplicationMetric(duplication);
+tuple[str, str, str, str] calcSourceCodeRatings(str volume, str duplication, str complexity, str unitSize) {
+    analysabilityScores = [numericScore[volume], numericScore[duplication], numericScore[unitSize]];
+    changeabilityScores = [numericScore[complexity], numericScore[duplication]];
+    testabilityScores = [numericScore[complexity], numericScore[unitSize]];
+
+    analysabilityScore = sum(analysabilityScores) / size(analysabilityScores);
+    changeabilityScore = sum(changeabilityScores) / size(changeabilityScores);
+    testabilityScore = sum(testabilityScores) / size(testabilityScores);
+
+    maintainabilityScores = [analysabilityScore, changeabilityScore, testabilityScore];
+    maintainabilityScore = sum(maintainabilityScores) / size(maintainabilityScores);
+
+    return <score[analysabilityScore], score[changeabilityScore], score[testabilityScore], score[maintainabilityScore]>;
+}
+
+str duplicationReport(real duplication, str duplicationScore) {
     str duplicationReport = 
 "========== Duplication ==========
 
@@ -71,12 +88,11 @@ Duplication Score: <duplicationScore>
     return duplicationReport;
 }
 
-str volumeReport(int volume) {
-    tuple[str score, str manYears] volumeScore = calcVolumeMetric(volume);
+str volumeReport(int volume, tuple[str score, str manYears] volumeScore) {
     str volumeReport = 
 "==========  Volume ========== 
+
 Volume: <volume> 
-    
 Volume Man Years: <volumeScore.manYears>
     
 Volume Score: <volumeScore.score>
@@ -87,16 +103,14 @@ Volume Score: <volumeScore.score>
 
 }
 
-str complexityReport(tuple[real low, real moderate, real high, real veryHigh] complexity) {
-    str complexityScore = calcComplexityReport(complexity.moderate, complexity.high, complexity.veryHigh);
-    str complexityReport = "==========  Complexity ========== 
-Low Risk: <complexity.low> 
+str complexityReport(tuple[real low, real moderate, real high, real veryHigh] complexity, str complexityScore) {
+    str complexityReport = 
+"========== Unit Complexity ========== 
 
-Moderate Risk: <complexity.moderate> 
-
-High Risk: <complexity.high> 
-
-Very High Risk: <complexity.veryHigh> 
+Low Risk (simple): <complexity.low> 
+Moderate Risk (more complex): <complexity.moderate> 
+High Risk (complex): <complexity.high> 
+Very High Risk (untestable): <complexity.veryHigh> 
     
 Complexity Score: <complexityScore>
 
@@ -105,11 +119,49 @@ Complexity Score: <complexityScore>
     return complexityReport;  
 }
 
-void printMetricsReport(int volume, real duplication, str name) {
+str unitSizeReport(tuple[real low, real moderate, real high, real veryHigh] complexity, str complexityScore) {
+    str complexityReport = 
+"==========  Unit Size ========== 
+
+Low Risk (simple): <complexity.low> 
+Moderate Risk (more complex): <complexity.moderate> 
+High Risk (complex): <complexity.high> 
+Very High Risk (untestable): <complexity.veryHigh> 
+    
+Unit Size Score: <complexityScore>
+
+";
+
+    return complexityReport;  
+}
+
+str sourceCodeReport(tuple[str, str, str, str] sourceCodeScores) {
+    str report = 
+"==========  Source Code Maintainability ========== 
+
+Analysability: <sourceCodeScores[0]>
+
+Changeability: <sourceCodeScores[1]>
+
+Testabillity: <sourceCodeScores[2]>
+
+Overall Maintainability: <sourceCodeScores[3]>
+
+";
+    return report;
+}
+
+void printMetricsReport(int volume, real duplication, tuple[real, real, real, real] complexity, tuple[real, real, real, real] unitSize, str name) {
     header = 
         "----------------------------------------------------------------\n" +
         "  <name> Maintainability Score Report \n" + 
         "----------------------------------------------------------------\n";
 
-    println(header + volumeReport(volume) + duplicationReport(duplication));
+    duplicationScore = calcDuplicationMetric(duplication);
+    volumeScore = calcVolumeMetric(volume);
+    complexityScore = calcComplexityScore(complexity[1], complexity[2], complexity[3]);
+    unitSizeScore = calcComplexityScore(complexity[1], complexity[2], complexity[3]);
+    sourceCodeScores = calcSourceCodeRatings(volumeScore[0], duplicationScore, complexityScore, unitSizeScore);
+
+    println(header + volumeReport(volume, volumeScore) + duplicationReport(duplication, duplicationScore) + complexityReport(complexity, complexityScore) + unitSizeReport(unitSize, unitSizeScore) + sourceCodeReport(sourceCodeScores));
 }

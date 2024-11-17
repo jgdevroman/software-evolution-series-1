@@ -38,7 +38,7 @@ void main() {
     // hsqlDuplication = getDuplication(projectPathHsql);
     // println("Duplication hsql: <hsqlDuplication>");
 
-    getUnitSize(projectPathSmallSql);
-    calculateComplexity(smallsqlAST);
-    printMetricsReport(smallSqlVolume, smallSqlDuplication, "smallsql0.21");
+    smallSqlUnitSize = getUnitSize(projectPathSmallSql);
+    smallSqlComplexity = calculateComplexity(smallsqlAST);
+    printMetricsReport(smallSqlVolume, smallSqlDuplication, smallSqlComplexity, smallSqlUnitSize, "smallsql0.21");
 }
