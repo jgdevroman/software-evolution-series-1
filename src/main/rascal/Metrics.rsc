@@ -7,14 +7,6 @@ import String;
 import Map;
 import Node;
 
-// map[str, str] score = (
-//     "VERY_GOOD": "++",
-//     "GOOD": "+",
-//     "SUFFICIENT": "o",
-//     "LOW": "-",
-//     "VERY_LOW": "--"
-// );
-
 tuple[str VERY_GOOD, str GOOD, str SUFFICIENT, str LOW, str VERY_LOW] score = <"++", "+", "o", "-", "--">;
 
 tuple[str,str] calcVolumeMetric(int volume) {
@@ -93,6 +85,24 @@ Volume Score: <volumeScore.score>
 
     return volumeReport; 
 
+}
+
+str complexityReport(tuple[real low, real moderate, real high, real veryHigh] complexity) {
+    str complexityScore = calcComplexityReport(complexity.moderate, complexity.high, complexity.veryHigh);
+    str complexityReport = "==========  Complexity ========== 
+Low Risk: <complexity.low> 
+
+Moderate Risk: <complexity.moderate> 
+
+High Risk: <complexity.high> 
+
+Very High Risk: <complexity.veryHigh> 
+    
+Complexity Score: <complexityScore>
+
+";
+
+    return complexityReport;  
 }
 
 void printMetricsReport(int volume, real duplication, str name) {
