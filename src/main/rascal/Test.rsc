@@ -23,7 +23,22 @@ void TestComplexity(){
     set[loc] testco = find(testLocation, "java");
 
     for (loc l <- testco){
-        getComplexity(l);
+        println(getComplexity(l));
     }
 
+}
+void TestUnitSize(){
+    loc testLocation = |cwd:///Tests///UnitSize|;
+    
+    set[loc] testco = find(testLocation, "java");
+
+    for (loc l <- testco){
+        println(getComplexity(l));
+    }
+
+}
+
+void main() {
+    TestComplexity();
+    TestUnitSize();
 }

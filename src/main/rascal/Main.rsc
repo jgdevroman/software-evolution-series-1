@@ -42,4 +42,5 @@ void main() {
     hsqldbUnitSize = getUnitSize(projectPathHsql);
     hsqldbComplexity = calculateComplexity(hsqldbAST);
     printMetricsReport(hsqldbVolume, hsqldbDuplication, hsqldbComplexity, hsqldbUnitSize, "hsqldb-2.3.1");
+
 }

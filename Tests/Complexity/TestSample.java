@@ -1,4 +1,4 @@
-Complexitypublic class TestSample {
+public class TestSample {
 
     public void testIf() {
         if (true) { // +1
