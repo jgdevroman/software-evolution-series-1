@@ -11,6 +11,7 @@ import Map;
 import Node;
 
 import Volume;
+import Duplication;
 
 void printAllSourceLocations(list[Declaration] asts) {
     for (decl <- asts) {
@@ -28,9 +29,12 @@ void main() {
     loc projectPathHsql = |cwd:///hsqldb-2.3.1|;
     
     smallSqlVolume = getVolume(projectPathSmallSql);
+    smallSqlDuplication = getDuplication(projectPathSmallSql);
     // Getting errors. Need to fix 
     // hsqlVolume = getVolume(projectPathHsql);
 
     println("Volume smallSql: <smallSqlVolume>");
+    println("Duplication smallSql: <smallSqlDuplication>");
     // println("Volume hsql: <hsqlVolume>");
+
 }
