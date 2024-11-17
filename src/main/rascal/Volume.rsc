@@ -16,7 +16,7 @@ import Utility;
 int getVolume(set[loc] locations) {
     totalCount = 0;
     for (l <- locations){
-        code = readFile(file);
+        code = readFile(l);
         totalCount += getLineCount(code);
     }
 

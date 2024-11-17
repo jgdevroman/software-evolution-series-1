@@ -3,6 +3,27 @@ module Utility
 import lang::java::m3::Core;
 import lang::java::m3::AST;
 
+list[real] getRisks(list[tuple[int, int]] ccLocTuples, list[int] thresholds){
+    list[real] riskList = [0.0, 0.0, 0.0, 0.0];
+
+    for(tuple[int, int] ccLocTuple <- ccLocTuples){
+        int cc = ccLocTuple[0];
+        int LOC = ccLocTuple[1];
+
+        if (cc <= thresholds[0]){
+            riskList[0] += LOC; // Simple
+        } else if (cc <= thresholds[1]){
+            riskList[1] +=LOC; // Moderate
+        } else if (cc <= thresholds[2]){
+            riskList[2] += LOC; // Complex
+        } else {
+            riskList[3] += LOC; // Untestable
+        }
+    }
+
+    return riskList;
+}
+
 list[real] getRisks(list[int] lines, list[int] thresholds) {
     list[real] riskList = [0.0, 0.0, 0.0, 0.0];
 

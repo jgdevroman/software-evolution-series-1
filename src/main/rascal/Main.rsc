@@ -27,14 +27,9 @@ void main() {
     set[loc] hsqldbAST = find(projectPathHsql, "java");
     set[loc] testloc = find(testLocation, "java");
     
-    TestComplexity();
+    int smallSqlVolume = getVolume(smallsqlAST);
+    println("Volume smallSql: <smallSqlVolume>");
 
-    //getUnitSize(projectPathSmallSql);
-    //getUnitSize(projectPathSmallSql);
-    // smallSqlVolume = getVolume(smallsqlAST);
-    // hsqlVolume = getVolume(hsqldbAST);
-    //getComplexity(projectPathSmallSql);
-    //TestComplexity();
-    // println("Volume smallSql: <smallSqlVolume>");
-    // println("Volume hsql: <hsqlVolume>");
+    getUnitSize(projectPathSmallSql);
+    calculateComplexity(smallsqlAST);
 }

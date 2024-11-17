@@ -20,7 +20,6 @@ void getUnitSize(loc projectLocation) {
     list[int] perUnitCount = []; 
 
     for (m <- methods) {
-        println(m);
         code = readFile(m);
         perUnitCount += getLineCount(code);     
     }

@@ -22,31 +22,67 @@ loc sourceFile(loc logical, M3 model) {
   throw FileNotFound(logical);
 }
 
-void getComplexity(loc file) {
+
+void calculateComplexity(set[loc] projectFiles) {
+
+    list[int] perUnitCount = []; 
+    list[tuple[int, int]] ccLocList = [];
+    int totalLOC = 0;
+
+    for(f <- projectFiles){
+        tuple[list[tuple[int, int]], int] result = getComplexity(f);
+        ccLocList += result[0];
+
+        perUnitCount += result[1];
+        totalLOC += result[1];
+    }
+
+    //from paper
+    list[real] risks = getRisks(ccLocList, [10, 20, 50]);
+
+    list[str] labels = ["Simple", "More complex", "Complex", "Untestable"];
+    
+    println("\nCalculated Risks:");
+    for (int i <- [0 .. size(risks)]) {
+        println("<labels[i]> Risk: <risks[i]>");
+    }
+
+    // Print the total LOC
+    
+    println("\nRisk Percentages:");
+    for (int i <- [0 .. size(risks)]) {
+        real percentage = (risks[i] / totalLOC) * 100;
+        println("<labels[i]>: <percentage>%");
+    }
+
+    str complexityRating = determineComplexityRating(risks[1], risks[2], risks[3]);
+    println("Complexity rating: <complexityRating>");
+}
+
+tuple[list[tuple[int, int]], int] getComplexity(file) {
     myModel = createM3FromFile(file);
     fileAST  = createAstFromFile(file, true);
 
     set[loc] myMethods = methods(myModel);
+    // List to store tuples of (LOC, CC)
+    list[tuple[int, int]] ccLocList = [];
     
-    for (m <- myMethods) { 
-        //methodSrc = readFile(m);
+    int totalLOC = 0;
+
+    for (m <- myMethods) {
         methodAST = {d | /Declaration d := fileAST, d.decl == m};
            
         int cc = calcCC(methodAST);
-        println("CC: <cc>");
-
         loc source = sourceFile(m, myModel);
         code = readFile(source);
         
         int count = getLineCount(code);
+        totalLOC += count;
 
-        println("<m>");
-        println("LOC: <count>");
-        println("CC: <cc>");
-        
-
+        ccLocList += <cc, count>;
     }
 
+    return <ccLocList, totalLOC>;
 }
 
 // This function is from "Empirical analysis of the relationship between CC and SLOC
