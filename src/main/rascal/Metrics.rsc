@@ -75,11 +75,12 @@ tuple[str, str, str, str] calcSourceCodeRatings(str volume, str duplication, str
     return <score[analysabilityScore], score[changeabilityScore], score[testabilityScore], score[maintainabilityScore]>;
 }
 
-str duplicationReport(real duplication, str duplicationScore) {
+str duplicationReport(tuple[real,int] duplication, str duplicationScore) {
     str duplicationReport = 
 "========== Duplication ==========
 
-Duplication percentage: <duplication> 
+Duplicatied Lines: <duplication[1]>
+Duplication percentage: <duplication[0]> 
 
 Duplication Score: <duplicationScore>
 
@@ -140,9 +141,7 @@ str sourceCodeReport(tuple[str, str, str, str] sourceCodeScores) {
 "==========  Source Code Maintainability ========== 
 
 Analysability: <sourceCodeScores[0]>
-
 Changeability: <sourceCodeScores[1]>
-
 Testabillity: <sourceCodeScores[2]>
 
 Overall Maintainability: <sourceCodeScores[3]>
@@ -151,13 +150,13 @@ Overall Maintainability: <sourceCodeScores[3]>
     return report;
 }
 
-void printMetricsReport(int volume, real duplication, tuple[real, real, real, real] complexity, tuple[real, real, real, real] unitSize, str name) {
+void printMetricsReport(int volume, tuple[real,int] duplication, tuple[real, real, real, real] complexity, tuple[real, real, real, real] unitSize, str name) {
     header = 
         "----------------------------------------------------------------\n" +
         "  <name> Maintainability Score Report \n" + 
         "----------------------------------------------------------------\n";
 
-    duplicationScore = calcDuplicationMetric(duplication);
+    duplicationScore = calcDuplicationMetric(duplication[0]);
     volumeScore = calcVolumeMetric(volume);
     complexityScore = calcComplexityScore(complexity[1], complexity[2], complexity[3]);
     unitSizeScore = calcComplexityScore(complexity[1], complexity[2], complexity[3]);

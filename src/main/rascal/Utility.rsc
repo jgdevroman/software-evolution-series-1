@@ -26,15 +26,16 @@ list[str] getLines(loc projectLocation) {
 }
 
 bool isRedundantLine(str line) {
-  // Check if comma
-  if(endsWith(line, "*/") || startsWith(line, "/*") || startsWith(line, "*")) {
-     return true; 
-  }
-  // Check if whitespace
-  if( /^\s*$/ := line) {
-    return true;
-  }
-  return false;
+    // Check if comment
+    trimmedLine = trim(line);     
+    if(endsWith(trimmedLine, "*/") || startsWith(trimmedLine, "/*") || startsWith(trimmedLine, "*") || startsWith(trimmedLine, "//")) {
+        return true; 
+    }
+    // Check if whitespace
+    if( /^\s*$/ := line) {
+        return true;
+    }
+    return false;
 }
 
 list[str] filterRedundantLines(list[str] src) {

@@ -39,9 +39,9 @@ void main() {
     // hsqlDuplication = getDuplication(projectPathHsql);
     // println("Duplication hsql: <hsqlDuplication>");
 
-    hsqldbVolume = getVolume(hsqldbAST);
-    hsqldbDuplication = getDuplication(projectPathHsql);
-    hsqldbUnitSize = getUnitSize(projectPathHsql);
-    hsqldbComplexity = calculateComplexity(hsqldbAST);
-    printMetricsReport(hsqldbVolume, hsqldbDuplication, hsqldbComplexity, hsqldbUnitSize, "hsqldb-2.3.1");
+//     hsqldbVolume = getVolume(hsqldbAST);
+//     hsqldbDuplication = getDuplication(projectPathHsql);
+//     hsqldbUnitSize = getUnitSize(projectPathHsql);
+//     hsqldbComplexity = calculateComplexity(hsqldbAST);
+//     printMetricsReport(hsqldbVolume, hsqldbDuplication, hsqldbComplexity, hsqldbUnitSize, "hsqldb-2.3.1");
 }
