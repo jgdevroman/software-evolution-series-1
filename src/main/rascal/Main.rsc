@@ -16,6 +16,7 @@ import Utility;
 import UnitSize;
 import UnitComplexity;
 import Test;
+import Duplication;
 
 
 void main() {
