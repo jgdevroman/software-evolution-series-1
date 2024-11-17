@@ -9,28 +9,32 @@ import Set;
 import String;
 import Map;
 import Node;
+import util::FileSystem;
 
 import Volume;
+import Utility;
+import UnitSize;
+import UnitComplexity;
+import Test;
 
-void printAllSourceLocations(list[Declaration] asts) {
-    for (decl <- asts) {
-        println("Source location for declaration:");
-        println("File: <decl.src.top>");
-        str file = readFile(decl.src.top);
-        println(file);
-
-        break;
-    }
-}
 
 void main() {
     loc projectPathSmallSql = |cwd:///smallsql0.21_src|;
     loc projectPathHsql = |cwd:///hsqldb-2.3.1|;
-    
-    smallSqlVolume = getVolume(projectPathSmallSql);
-    // Getting errors. Need to fix 
-    // hsqlVolume = getVolume(projectPathHsql);
+    loc testLocation = |cwd:///Tests///Complexity|;
 
-    println("Volume smallSql: <smallSqlVolume>");
+    set[loc] smallsqlAST = find(projectPathSmallSql, "java");
+    set[loc] hsqldbAST = find(projectPathHsql, "java");
+    set[loc] testloc = find(testLocation, "java");
+    
+    TestComplexity();
+
+    //getUnitSize(projectPathSmallSql);
+    //getUnitSize(projectPathSmallSql);
+    // smallSqlVolume = getVolume(smallsqlAST);
+    // hsqlVolume = getVolume(hsqldbAST);
+    //getComplexity(projectPathSmallSql);
+    //TestComplexity();
+    // println("Volume smallSql: <smallSqlVolume>");
     // println("Volume hsql: <hsqlVolume>");
 }
