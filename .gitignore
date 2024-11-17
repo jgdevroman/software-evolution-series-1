@@ -1,4 +1,6 @@
 target
 *.gradle
+hsqldb*
+smallsql*
 
 !Tests/Complexity/complexity.java
