@@ -23,29 +23,6 @@ real getDuplication(loc projectPath) {
     return (count * 1.0) / (size(lines) * 1.0);   
 }
 
-// bool isSubset(list[str] leftSide, list[str] rightSide) {
-//     if (leftSide <= rightSide) {
-//         return true;
-//     }
-//     return false;
-// }
-
-// bool isOverLapping(list[str] leftSide, list[str] rightSide) {
-//     if (size(leftSide - rightSide) <= size(leftSide) - size(rightSide) + 1) {
-//         return true;
-//     }
-//     return false;
-// }
-
-// list[list[str]] deleteElement(list[list[str]] src, list[str] el) {
-//     return delete(src, indexOf(src, el));
-// }
-
-// list[str] mergeLists(list[str] leftSide, list[str] rightSide) {
-//     list[str] intersection = leftSide & rightSide;
-//     return leftSide + (rightSide - intersection);
-// }
-
 int getDuplicationCount(list[str] lines) {
     // Return no duplication if there are no lines or there are not more than 6 lines
     if (isEmpty(lines) || size(lines) < BLOCK_COUNT) {
