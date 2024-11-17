@@ -22,8 +22,7 @@ loc sourceFile(loc logical, M3 model) {
   throw FileNotFound(logical);
 }
 
-
-void calculateComplexity(set[loc] projectFiles) {
+tuple[real,real,real,real] calculateComplexity(set[loc] projectFiles) {
 
     list[int] perUnitCount = []; 
     list[tuple[int, int]] ccLocList = [];
@@ -50,13 +49,14 @@ void calculateComplexity(set[loc] projectFiles) {
     // Print the total LOC
     
     println("\nRisk Percentages:");
+    tuple[real, real, real, real] percentages = <0.0, 0.0, 0.0 ,0.0>;
     for (int i <- [0 .. size(risks)]) {
         real percentage = (risks[i] / totalLOC) * 100;
+        percentages[i] = percentage;
         println("<labels[i]>: <percentage>%");
     }
 
-    str complexityRating = determineComplexityRating(risks[1], risks[2], risks[3]);
-    println("Complexity rating: <complexityRating>");
+    return percentages;
 }
 
 tuple[list[tuple[int, int]], int] getComplexity(file) {
@@ -107,4 +107,25 @@ int calcCC(set[Declaration] ast) {
     }
     
     return result;
+}
+
+list[real] getRisks(list[tuple[int, int]] ccLocTuples, list[int] thresholds){
+    list[real] riskList = [0.0, 0.0, 0.0, 0.0];
+
+    for(tuple[int, int] ccLocTuple <- ccLocTuples){
+        int cc = ccLocTuple[0];
+        int LOC = ccLocTuple[1];
+
+        if (cc <= thresholds[0]){
+            riskList[0] += LOC; // Simple
+        } else if (cc <= thresholds[1]){
+            riskList[1] +=LOC; // Moderate
+        } else if (cc <= thresholds[2]){
+            riskList[2] += LOC; // Complex
+        } else {
+            riskList[3] += LOC; // Untestable
+        }
+    }
+
+    return riskList;
 }

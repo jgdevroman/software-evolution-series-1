@@ -14,14 +14,13 @@ import Utility;
 
 int BLOCK_COUNT = 6;
 
-real getDuplication(loc projectPath) {
+tuple[real,int] getDuplication(loc projectPath) {
     // list[Declaration] asts = getASTs(projectPath);
 
     list[str] lines = getLines(projectPath);
     int count = getDuplicationCount(lines);
-    println("Duplication count: <count>");
 
-    return (count * 1.0) / (size(lines) * 1.0);   
+    return <(count * 1.0) / (size(lines) * 1.0), count>;
 }
 
 int getDuplicationCount(list[str] lines) {

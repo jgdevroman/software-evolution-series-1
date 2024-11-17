@@ -34,7 +34,7 @@ int getLineCount(str code) {
     for (str line <- lines) {
       line = trim(line);
 
-      if(!startsWith(line, "//") && line != "") {
+      if(!isRedundantLine(line)) {
         totalCount += 1; 
       }
     }
