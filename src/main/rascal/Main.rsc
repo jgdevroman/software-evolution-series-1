@@ -29,16 +29,19 @@ void main() {
     set[loc] hsqldbAST = find(projectPathHsql, "java");
     set[loc] testloc = find(testLocation, "java");
     
-    int smallSqlVolume = getVolume(smallsqlAST);
-    println("Volume smallSql: <smallSqlVolume>");
-
+    smallSqlVolume = getVolume(smallsqlAST);
     smallSqlDuplication = getDuplication(projectPathSmallSql);
+    smallSqlUnitSize = getUnitSize(projectPathSmallSql);
+    smallSqlComplexity = calculateComplexity(smallsqlAST);
+    printMetricsReport(smallSqlVolume, smallSqlDuplication, smallSqlComplexity, smallSqlUnitSize, "smallsql0.21");
 
     // println("Volume hsql: <hsqlVolume>");
     // hsqlDuplication = getDuplication(projectPathHsql);
     // println("Duplication hsql: <hsqlDuplication>");
 
-    smallSqlUnitSize = getUnitSize(projectPathSmallSql);
-    smallSqlComplexity = calculateComplexity(smallsqlAST);
-    printMetricsReport(smallSqlVolume, smallSqlDuplication, smallSqlComplexity, smallSqlUnitSize, "smallsql0.21");
+    hsqldbVolume = getVolume(hsqldbAST);
+    hsqldbDuplication = getDuplication(projectPathHsql);
+    hsqldbUnitSize = getUnitSize(projectPathHsql);
+    hsqldbComplexity = calculateComplexity(hsqldbAST);
+    printMetricsReport(hsqldbVolume, hsqldbDuplication, hsqldbComplexity, hsqldbUnitSize, "hsqldb-2.3.1");
 }
