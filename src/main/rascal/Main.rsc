@@ -12,6 +12,7 @@ import Node;
 
 import Volume;
 import Duplication;
+import Metrics;
 
 void printAllSourceLocations(list[Declaration] asts) {
     for (decl <- asts) {
@@ -30,9 +31,8 @@ void main() {
     
 
     smallSqlVolume = getVolume(projectPathSmallSql);
-    println("Volume smallSql: <smallSqlVolume>"); 
     smallSqlDuplication = getDuplication(projectPathSmallSql);
-    println("Duplication smallSql: <smallSqlDuplication>");
+    printMetricsReport(smallSqlVolume, smallSqlDuplication, "smallsql0.21");
 
     // println("Volume hsql: <hsqlVolume>");
     hsqlDuplication = getDuplication(projectPathHsql);

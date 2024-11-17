@@ -19,7 +19,6 @@ real getDuplication(loc projectPath) {
 
     list[str] lines = getLines(projectPath);
     int count = getDuplicationCount(lines);
-    println("Duplication count: <count>");
 
     return (count * 1.0) / (size(lines) * 1.0);   
 }
